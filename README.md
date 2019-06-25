@@ -37,6 +37,18 @@
 
 ### Using Android Debug Database Library in your application
 
+Add the following repository to you project-root build.gradle:
+
+```groovy
+allrepositories {
+
+   repositories {
+      ...
+      maven { url 'https://dl.bintray.com/ekigamba/android-debug-database' }
+   }
+}
+```
+
 Add this to your app's build.gradle
 
 ```groovy
