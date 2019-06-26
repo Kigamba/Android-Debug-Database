@@ -24,9 +24,12 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.amitshekhar.utils.DatabaseFileProvider;
+import com.amitshekhar.utils.DbPasswordProvider;
 import com.sample.encrypt.database.CarDBHelper;
 import com.sample.encrypt.database.ContactDBHelper;
 import com.sample.encrypt.database.ExtTestDBHelper;
@@ -49,6 +52,17 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
+
+        /*DatabaseFileProvider.setDbPasswordProvider(new DbPasswordProvider() {
+            @Override
+            public String getDbPassword(@NonNull String dbName) {
+                if (dbName.equalsIgnoreCase("Person")) {
+                    return "a_password";
+                }
+
+                return null;
+            }
+        });*/
 
         Set<String> stringSet = new HashSet<>();
         stringSet.add("SetOne");

@@ -20,6 +20,7 @@
 package com.amitshekhar.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import java.io.File;
@@ -33,6 +34,8 @@ import java.util.HashMap;
 public class DatabaseFileProvider {
 
     private final static String DB_PASSWORD_RESOURCE = "DB_PASSWORD_{0}";
+
+    private static DbPasswordProvider dbPasswordProvider;
 
     private DatabaseFileProvider() {
         // This class in not publicly instantiable
@@ -59,6 +62,19 @@ public class DatabaseFileProvider {
         String resourceName = MessageFormat.format(DB_PASSWORD_RESOURCE, nameWithoutExt.toUpperCase());
         String password = "";
 
+        if (dbPasswordProvider != null) {
+            String passFromProvider = dbPasswordProvider.getDbPassword(nameWithoutExt);
+
+            if (!TextUtils.isEmpty(passFromProvider)) {
+                return passFromProvider;
+            }
+
+            passFromProvider = dbPasswordProvider.getDbPassword(name);
+            if (!TextUtils.isEmpty(passFromProvider)) {
+                return passFromProvider;
+            }
+        }
+
         int resourceId = context.getResources().getIdentifier(resourceName, "string", context.getPackageName());
 
         if (resourceId != 0) {
@@ -66,5 +82,9 @@ public class DatabaseFileProvider {
         }
 
         return password;
+    }
+
+    public static void setDbPasswordProvider(DbPasswordProvider dbPasswordProvider) {
+        DatabaseFileProvider.dbPasswordProvider = dbPasswordProvider;
     }
 }
