@@ -61,6 +61,14 @@ Using the Android Debug Database with encrypted database
 debugImplementation 'com.amitshekhar.android:debug-db-encrypt:1.0.6'
 ```
 
+Also make sure to add the db password(s) inside your resources folder when debugging. The db password should be referenced in the following format `DB_PASSWORD_[DB_NAME_WITHOUT_EXTENSION_IN_CAPS]`. You can do this by including the database password in the string resources or adding it through the  `build.gradle` file like below:
+
+```groovy
+debug {
+   resValue("string", "DB_PASSWORD_PERSONS", "a_password")
+}
+```
+
 Use `debugImplementation` so that it will only compile in your debug build and not in your release build.
 
 That’s all, just start the application, you will see in the logcat an entry like follows :
